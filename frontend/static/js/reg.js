@@ -8,53 +8,50 @@ const eye = document.getElementById("eye")
 const eye2 = document.getElementById("eye2")
 
 btnReg.addEventListener("click", async () => {
-    if (!inputLogin.value){
-        inputLogin.classList.remove("border-gray-200")
-        inputLogin.classList.add("border-red-700")
-    }
-    if (!inputName.value){
-        inputName.classList.remove("border-gray-200")
-        inputName.classList.add("border-red-700")
-    }
-    if (!inputSurname.value){
-        inputSurname.classList.remove("border-gray-200")
-        inputSurname.classList.add("border-red-700")
-    }
-    if (!inputPassword.value){
-        inputPassword.classList.remove("border-gray-200")
-        inputPassword.classList.add("border-red-700")
-    }
-    if ((inputPassword.value != inputPassword2.value) || (inputPassword2.value == "")){
-        inputPassword2.classList.remove("border-gray-200")
-        inputPassword2.classList.add("border-red-700")
-    }
-    console.log(JSON.stringify({
-        login: inputLogin.value,
-        name: inputName.value,
-        surname: inputSurname.value,
-        password: inputPassword.value
-    }))
-    response = await fetch("/reg", {
-        method: "POST",
-        headers: { 
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            login: inputLogin.value,
-            name: inputName.value,
-            surname: inputSurname.value,
-            password: inputPassword.value
-        })
-
-    })
-
-    if (response.ok){
-        response = await response.json()
-        window.location = "/"
+    if (!inputLogin.value || !inputName.value || !inputSurname.value || !inputPassword.value || (inputPassword.value != inputPassword2.value) || (inputPassword2.value == "")){
+        if (!inputLogin.value){
+            inputLogin.classList.remove("border-gray-200")
+            inputLogin.classList.add("border-red-700")
+        }
+        if (!inputName.value){
+            inputName.classList.remove("border-gray-200")
+            inputName.classList.add("border-red-700")
+        }
+        if (!inputSurname.value){
+            inputSurname.classList.remove("border-gray-200")
+            inputSurname.classList.add("border-red-700")
+        }
+        if (!inputPassword.value){
+            inputPassword.classList.remove("border-gray-200")
+            inputPassword.classList.add("border-red-700")
+        }
+        if ((inputPassword.value != inputPassword2.value) || (inputPassword2.value == "")){
+            inputPassword2.classList.remove("border-gray-200")
+            inputPassword2.classList.add("border-red-700")
+        }
     }
     else{
-        response = await response.json()
-        alert(response.detail)
+        response = await fetch("/reg", {
+            method: "POST",
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                login: inputLogin.value,
+                name: inputName.value,
+                surname: inputSurname.value,
+                password: inputPassword.value
+            })
+    
+        })
+    
+        if (response.ok){
+            window.location = "/"
+        }
+        else{
+            response = await response.json()
+            alert(response.detail)
+        }
     }
 })
 

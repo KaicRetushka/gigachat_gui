@@ -16,3 +16,4 @@ async def give_vhod(request: Request):
 @router_routing.get("/reg", tags=["Получить страницу регистрации"])
 async def give_reg(request: Request):
     return templates.TemplateResponse("reg.html", {"request": request})
+

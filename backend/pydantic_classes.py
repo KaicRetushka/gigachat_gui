@@ -5,3 +5,7 @@ class BudyReg(BaseModel):
     name: str
     surname : str
     password: str
+
+class BodyVhod(BaseModel):
+    login: str
+    password: str

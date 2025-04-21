@@ -14,3 +14,10 @@ def insert_user(login, name, surname, password):
             session.add(user)
             session.commit()
             return user.id
+        
+def check_user(login, password):
+    with Session() as session:
+        user = session.query(TableUsers).filter((TableUsers.login == login) & (TableUsers.password == password)).first()
+        if user:
+            return True
+        return False
