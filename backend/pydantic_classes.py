@@ -9,3 +9,6 @@ class BudyReg(BaseModel):
 class BodyVhod(BaseModel):
     login: str
     password: str
+
+class BodyMessage(BaseModel):
+    text: str

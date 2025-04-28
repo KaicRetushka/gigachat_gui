@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, INTEGER, String, JSON, ForeignKey
 from sqlalchemy.orm import declarative_base, Mapped, mapped_column, relationship 
+from datetime import datetime
 
 engine = create_engine("sqlite:///backend/database/mydb.db")
 
@@ -17,8 +18,10 @@ class TableUsers(Base):
 class TableChats(Base):
     __tablename__ = "chats"
     id: Mapped[int] = mapped_column(INTEGER, primary_key=True, autoincrement=True)
+    title: Mapped[str]
     messages: Mapped[str] = mapped_column(JSON)
     users = relationship("TableUsers", back_populates="chats")
+    last_change_datetime: Mapped[datetime]
     user_id: Mapped[int] = mapped_column(INTEGER, ForeignKey("users.id"))
 
 def create_db():

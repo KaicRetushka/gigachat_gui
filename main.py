@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 from authx.exceptions import MissingTokenError, JWTDecodeError
 import uvicorn
 import jwt
@@ -29,11 +30,11 @@ app.add_middleware(
 
 @app.exception_handler(MissingTokenError)
 async def misssing_token_error(request, exc):
-    raise HTTPException(status_code=403, detail="Вы не зврегистророваны")
+    return RedirectResponse("/reg")
 
 @app.exception_handler(JWTDecodeError)
 async def jwt_decode_error(request, exc):
-    raise HTTPException(status_code=401, detail="Токен истёк или недействителен")
+    return RedirectResponse("/reg")
 
 if __name__ == "__main__":
     create_db()
