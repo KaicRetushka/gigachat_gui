@@ -26,7 +26,7 @@ btnReg.addEventListener("click", async () => {
             })
         })
         if (response.ok){
-            window.location = "/"
+            window.location = "/chat"
         }
         else {
             response = await response.json()

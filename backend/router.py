@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Response, HTTPException, Path, Depends, Request
+from fastapi import APIRouter, Response, HTTPException, Path, Depends, Request, Body
 
-from backend.pydantic_classes import BudyReg, BodyVhod, BodyMessage
+from backend.pydantic_classes import BudyReg, BodyVhod, BodyMessage, BodyNewTitle
 from backend.jwt import security, config
-from backend.database.requests import insert_user, check_user, insert_message_create_chat, insert_message_with_history
+from backend.database.requests import insert_user, check_user, insert_message_create_chat, insert_message_with_history, delete_chat_db, update_chat_db
 
 router = APIRouter()
 
@@ -40,3 +40,26 @@ async def post_message_chat_id(request: Request, chat_id: int, body: BodyMessage
     if answer:
         return {"answer_ai": answer}
     raise HTTPException(status_code=404, detail="Чат не найден")
+
+@router.delete("/chat/{id}", tags=["Удаление чата"])
+async def delete_chat(request: Request, id: int):
+    token = request.cookies.get(config.JWT_ACCESS_COOKIE_NAME)
+    user_id = security._decode_token(token).sub
+    data = delete_chat_db(user_id, id)
+    if data:
+        return {"detail": "Чат удалён"}
+    raise HTTPException(status_code=404, detail="Неверный id чата")
+
+@router.put("/chat/{id}", tags=["Изменение название чата"])
+async def put_chat(request: Request, id: int, body: BodyNewTitle):
+    token = request.cookies.get(config.JWT_ACCESS_COOKIE_NAME)
+    user_id = security._decode_token(token).sub
+    data = update_chat_db(user_id, id, body.new_title)
+    if data:
+        return {"detail": "Название чата изменено"}
+    raise HTTPException(status_code=404, detail="Неверный id чата")
+
+@router.delete("/exit", tags=["Выход"])
+async def exit(response: Response):
+    response.delete_cookie(config.JWT_ACCESS_COOKIE_NAME)
+    return {"detail": "Вы успешно вышли"}

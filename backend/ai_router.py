@@ -17,7 +17,7 @@ def ai_send_message(text):
         "question": text
     }
     response_ai = giga.invoke(text)
-    response_ai_title = giga.invoke([SystemMessage("Напиши назввание для чата в соответствии с этим запросом. Напиши только название чата и ничего больше без всяких знаков в начале и в конце"), HumanMessage(text)])
+    response_ai_title = giga.invoke([SystemMessage("Напиши назввание для чата в соответствии с этим запросом. Напиши только название чата и ничего больше без всяких знаков в начале и в конце. Максимум 3 слова названия чата. Нельзя использовать \""), HumanMessage(text)])
     response_ai_title = response_ai_title.content
     dict_question_answer["answer"] = response_ai.content
     messages.append(dict_question_answer)

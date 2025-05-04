@@ -22,7 +22,7 @@ def check_user(login, password):
     with Session() as session:
         user = session.query(TableUsers).filter((TableUsers.login == login) & (TableUsers.password == password)).first()
         if user:
-            return True
+            return user.id
         return False
     
 def insert_message_create_chat(user_id, text):
@@ -31,7 +31,7 @@ def insert_message_create_chat(user_id, text):
         chat = TableChats(user_id=user_id, messages=json.dumps(response_ai["messages"]), title=response_ai["title"], last_change_datetime=datetime.now())
         session.add(chat)
         session.commit()
-        return {"answer_ai": response_ai["answer"], "chat_id": chat.id}
+        return {"answer_ai": response_ai["answer"], "chat_id": chat.id, "title": response_ai["title"]}
     
 def insert_message_with_history(user_id, chat_id, text):
     with Session() as session:
@@ -57,5 +57,35 @@ def select_all_messages(chat_id):
         messages = (session.query(TableChats).filter(TableChats.id == chat_id).first()).messages
         return json.loads(messages)
     
-# def select_all_chats(id):
-#     chats = 
+def select_all_chats(user_id):
+    print(user_id)
+    with Session() as session:
+        list_chats = session.query(TableChats.id, TableChats.title).filter(TableChats.user_id == user_id).order_by(TableChats.last_change_datetime).all()
+        list_chats = [{"id": chat.id, "title": chat.title} for chat in list_chats]
+        print(list_chats)
+        return list_chats
+    
+def delete_chat_db(user_id, chat_id):
+    with Session() as session:
+        chat = session.query(TableChats).filter((TableChats.user_id == user_id) & (TableChats.id == chat_id)).first()
+        if chat:
+            session.delete(chat)
+            session.commit()
+            return True
+        else:
+            return False
+    
+def update_chat_db(user_id, chat_id, new_title):
+    with Session() as session:
+        chat = session.query(TableChats).filter((TableChats.user_id == user_id) & (TableChats.id == chat_id)).first()
+        if chat:
+            chat.title = new_title
+            session.commit()
+            return True
+        else:
+            return False
+
+def select_login(user_id):
+    with Session() as session:
+        user = session.query(TableUsers).filter(TableUsers.id == user_id).first()
+        return user.login 

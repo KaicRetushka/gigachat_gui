@@ -12,3 +12,6 @@ class BodyVhod(BaseModel):
 
 class BodyMessage(BaseModel):
     text: str
+
+class BodyNewTitle(BaseModel):
+    new_title: str
