@@ -89,3 +89,26 @@ def select_login(user_id):
     with Session() as session:
         user = session.query(TableUsers).filter(TableUsers.id == user_id).first()
         return user.login 
+    
+def update_login(user_id, new_login):
+    with Session() as session:
+        user = session.query(TableUsers).filter((TableUsers.login == new_login) & (TableUsers.id != user_id)).first()
+        if not(user):
+            user = session.query(TableUsers).filter(TableUsers.id == user_id).first()
+            user.login = new_login
+            session.commit()
+            return True
+        return False
+
+def update_login_password(user_id, new_login, old_password, new_password):
+    with Session() as session:
+        user = session.query(TableUsers).filter((TableUsers.login == new_login) & (TableUsers.id != user_id)).first()
+        if not(user):
+            user = session.query(TableUsers).filter(TableUsers.id == user_id).first()
+            if user.password != old_password:
+                return {"status_code": 401, "detail": "Неверный старый пароль"}
+            user.login = new_login
+            user.password = new_password
+            session.commit()
+            return {"status_code": 200, "detail": "Логин и пароль успешно изменены"}
+        return {"status_code": 409, "detail": "Такой логин уже занят"}

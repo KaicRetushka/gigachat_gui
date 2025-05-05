@@ -11,6 +11,7 @@ const btnProfile = document.getElementById("btnProfile")
 const profile = document.getElementById("profile")
 const bgNoColor = document.getElementById("bgNoColor")
 const btnExit = document.getElementById("btnExit")
+const btnprofile = document.getElementById("btnprofile")
 
 btnSendQuestion.addEventListener("click", async () => {
     vlaueTextareaQuestion = textareaQuestion.value
@@ -125,4 +126,8 @@ bgNoColor.addEventListener("click", () => {
 btnExit.addEventListener("click", async () => {
     await fetch("/exit", {method: "DELETE", headers: {"content-type": "application/json"}})
     location.href = "/reg"
+})
+
+btnprofile.addEventListener("click", () => {
+    location.href = "/profile"
 })

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Response, HTTPException, Path, Depends, Request, Body
 
-from backend.pydantic_classes import BudyReg, BodyVhod, BodyMessage, BodyNewTitle
+from backend.pydantic_classes import BudyReg, BodyVhod, BodyMessage, BodyNewTitle, BodyLogin, BodyLoginPassword
 from backend.jwt import security, config
-from backend.database.requests import insert_user, check_user, insert_message_create_chat, insert_message_with_history, delete_chat_db, update_chat_db
+from backend.database.requests import insert_user, check_user, insert_message_create_chat, insert_message_with_history, delete_chat_db, update_chat_db, update_login, update_login_password
 
 router = APIRouter()
 
@@ -63,3 +63,22 @@ async def put_chat(request: Request, id: int, body: BodyNewTitle):
 async def exit(response: Response):
     response.delete_cookie(config.JWT_ACCESS_COOKIE_NAME)
     return {"detail": "Вы успешно вышли"}
+
+@router.put("/profile/login", tags=["Изменеие логина"], dependencies=[Depends(security.access_token_required)])
+async def put_profile_login(request: Request, body: BodyLogin):
+    token = request.cookies.get(config.JWT_ACCESS_COOKIE_NAME)
+    user_id = security._decode_token(token).sub
+    data = update_login(int(user_id), body.new_login)
+    if data:
+        return {"detail": "Логин изменён"}
+    raise HTTPException(status_code=409, detail="Такой логин уже занят")
+
+@router.put("/profile/login/pasword", tags=["Изменение логина и пароля"], dependencies=[Depends(security.access_token_required)])
+async def put_profile_login_password(request: Request, body: BodyLoginPassword):
+    token = request.cookies.get(config.JWT_ACCESS_COOKIE_NAME)
+    user_id = security._decode_token(token).sub
+    data = update_login_password(user_id, body.new_login, body.old_password, body.new_password)
+    if data["status_code"] == 200:
+        return {"detail": data["detail"]}
+    print(data)
+    raise HTTPException(status_code=data["status_code"], detail=data["detail"])

@@ -71,15 +71,8 @@ inputName.addEventListener("keyup", changeInput)
 inputSurname.addEventListener("keyup", changeInput)
 inputPassword.addEventListener("keyup", changeInput)
 
-inputPassword.addEventListener("keyup", () => {
-    if ((inputPassword.value == inputPassword2.value) && (inputPassword.value != "")){
-        inputPassword2.classList.remove("border-red-700")
-        inputPassword2.classList.add("border-gray-200")
-    }
-})
-
 inputPassword2.addEventListener("keyup", () => {
-    if (inputPassword.value != inputPassword2.value){
+    if (inputPassword.value != inputPassword2.value || !inputPassword2.value){
         inputPassword2.classList.remove("border-gray-200")
         inputPassword2.classList.add("border-red-700")
     }

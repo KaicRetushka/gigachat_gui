@@ -36,3 +36,10 @@ async def give_vhod(request: Request):
 @router_routing.get("/reg", tags=["Получить страницу регистрации"])
 async def give_reg(request: Request):
     return templates.TemplateResponse("reg.html", {"request": request})
+
+@router_routing.get("/profile", tags=["Получение страницы профиля"], dependencies=[Depends(security.access_token_required)])
+async def give_profile(request: Request):
+    token = request.cookies.get(config.JWT_ACCESS_COOKIE_NAME)
+    user_id = security._decode_token(token).sub
+    login = select_login(int(user_id))
+    return templates.TemplateResponse("profile.html", {"request": request, "login": login})
