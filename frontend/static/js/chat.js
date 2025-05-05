@@ -17,7 +17,7 @@ btnSendQuestion.addEventListener("click", async () => {
     textareaQuestion.value = ""
     const list_href = (window.location.href).split("/")
     console.log(list_href.length)
-    allMesages.innerHTML += `<div class="flex flex-row-reverse"><p class="bg-green-200 max-w-[80%] p-2.5 rounded-xl">${vlaueTextareaQuestion}</p></div>` 
+    allMesages.innerHTML += `<div class="flex flex-row-reverse"><p class="bg-green-200 max-w-[85%] p-2.5 rounded-xl w-fit">${vlaueTextareaQuestion}</p></div>` 
     let response
     if(list_href.length == 4){
         response = await fetch("/message", {
@@ -49,8 +49,9 @@ btnSendQuestion.addEventListener("click", async () => {
             })
         })
         response = await response.json()
+        console.log(response)
     }
-    allMesages.innerHTML += `<div><p class="max-w-[80%]">${response.answer_ai}</p></div>`
+    allMesages.innerHTML += `<div><p class="max-w-[80%] w-fit">${response.answer_ai}</p></div>`
 })
 
 btnNewChat.addEventListener("click", () => {
