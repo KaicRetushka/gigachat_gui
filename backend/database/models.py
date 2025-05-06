@@ -10,8 +10,6 @@ class TableUsers(Base):
     __tablename__ = "users"
     id: Mapped[int] = mapped_column(INTEGER, primary_key=True, autoincrement=True)
     login: Mapped[str]
-    name: Mapped[str]
-    surname: Mapped[str]
     password: Mapped[str]
     chats = relationship("TableChats", back_populates="users")
 

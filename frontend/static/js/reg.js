@@ -1,25 +1,15 @@
 const btnReg = document.getElementById("btnReg")
 const inputLogin = document.getElementById("inputLogin")
-const inputName = document.getElementById("inputName")
-const inputSurname = document.getElementById("inputSurname")
 const inputPassword = document.getElementById("inputPassword")
 const inputPassword2 = document.getElementById("inputPassword2")
 const eye = document.getElementById("eye")
 const eye2 = document.getElementById("eye2")
 
 btnReg.addEventListener("click", async () => {
-    if (!inputLogin.value || !inputName.value || !inputSurname.value || !inputPassword.value || (inputPassword.value != inputPassword2.value) || (inputPassword2.value == "")){
+    if (!inputLogin.value || !inputPassword.value || (inputPassword.value != inputPassword2.value) || (inputPassword2.value == "")){
         if (!inputLogin.value){
             inputLogin.classList.remove("border-gray-200")
             inputLogin.classList.add("border-red-700")
-        }
-        if (!inputName.value){
-            inputName.classList.remove("border-gray-200")
-            inputName.classList.add("border-red-700")
-        }
-        if (!inputSurname.value){
-            inputSurname.classList.remove("border-gray-200")
-            inputSurname.classList.add("border-red-700")
         }
         if (!inputPassword.value){
             inputPassword.classList.remove("border-gray-200")
@@ -38,8 +28,6 @@ btnReg.addEventListener("click", async () => {
             },
             body: JSON.stringify({
                 login: inputLogin.value,
-                name: inputName.value,
-                surname: inputSurname.value,
                 password: inputPassword.value
             })
     
@@ -67,8 +55,6 @@ function changeInput() {
 }
 
 inputLogin.addEventListener("keyup", changeInput)
-inputName.addEventListener("keyup", changeInput)
-inputSurname.addEventListener("keyup", changeInput)
 inputPassword.addEventListener("keyup", changeInput)
 
 inputPassword2.addEventListener("keyup", () => {

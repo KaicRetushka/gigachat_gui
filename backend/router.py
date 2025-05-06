@@ -1,14 +1,14 @@
 from fastapi import APIRouter, Response, HTTPException, Path, Depends, Request, Body
 
-from backend.pydantic_classes import BudyReg, BodyVhod, BodyMessage, BodyNewTitle, BodyLogin, BodyLoginPassword
+from backend.pydantic_classes import BodyReg, BodyVhod, BodyMessage, BodyNewTitle, BodyLogin, BodyLoginPassword
 from backend.jwt import security, config
 from backend.database.requests import insert_user, check_user, insert_message_create_chat, insert_message_with_history, delete_chat_db, update_chat_db, update_login, update_login_password
 
 router = APIRouter()
 
 @router.post("/reg", tags=["Регистрация"])
-async def post_reg(body: BudyReg, response: Response):
-    response_db = insert_user(body.login, body.name, body.surname, body.password)
+async def post_reg(body: BodyReg, response: Response):
+    response_db = insert_user(body.login, body.password)
     if response_db:
         token = security.create_access_token(uid=str(response_db))
         response.set_cookie(config.JWT_ACCESS_COOKIE_NAME, token)
