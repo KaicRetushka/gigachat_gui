@@ -36,6 +36,10 @@ async def misssing_token_error(request, exc):
 async def jwt_decode_error(request, exc):
     return RedirectResponse("/reg")
 
+@app.api_route("/{unknown_path:path}", methods=["GET"])
+async def give_unknown_path(unknown_path: str):
+    return RedirectResponse("/chat", status_code=307)
+
 if __name__ == "__main__":
     create_db()
     uvicorn.run("main:app", host="0.0.0.0", reload=True)

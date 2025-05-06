@@ -112,3 +112,8 @@ def update_login_password(user_id, new_login, old_password, new_password):
             session.commit()
             return {"status_code": 200, "detail": "Логин и пароль успешно изменены"}
         return {"status_code": 409, "detail": "Такой логин уже занят"}
+    
+def select_name_chat(chat_id):
+    with Session() as session:
+        name_chat = session.query(TableChats.title).filter(TableChats.id == chat_id).scalar()
+        return name_chat
