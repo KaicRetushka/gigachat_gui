@@ -80,5 +80,4 @@ async def put_profile_login_password(request: Request, body: BodyLoginPassword):
     data = update_login_password(user_id, body.new_login, body.old_password, body.new_password)
     if data["status_code"] == 200:
         return {"detail": data["detail"]}
-    print(data)
     raise HTTPException(status_code=data["status_code"], detail=data["detail"])

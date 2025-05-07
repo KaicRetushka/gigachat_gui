@@ -26,16 +26,13 @@ def ai_send_message(text):
     return {"answer": response_ai_html, "messages": messages, "title": response_ai_title}
 
 def ai_send_message_with_history(messages, text):
-    history = [] #, но только чтобы он не влиял на всю страницу, а только на твой текст и не отпраляй опасный код
+    history = []
     for message in messages:
         history.append(HumanMessage(message["question"]))
         history.append(ChatMessage(message["answer"], role="assistant"))
     history.append(HumanMessage(text))
     response_ai = giga.invoke(history)
     response_ai_html = markdown.markdown(response_ai.content)
-    print(response_ai.content)
-    print("___________________________________________________________________________________")
-    print(response_ai_html)
     messages.append({"question": text, "answer": response_ai_html})
     return {"answer": response_ai_html, "messages": messages}
 

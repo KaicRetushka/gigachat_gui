@@ -22,7 +22,6 @@ btnSendQuestion.addEventListener("click", async () => {
     vlaueTextareaQuestion = textareaQuestion.value
     textareaQuestion.value = ""
     const listHref = (window.location.href).split("/")
-    console.log(listHref.length)
     allMesages.innerHTML += `<div class="flex flex-row-reverse"><p class="bg-green-200 max-w-[85%] p-2.5 rounded-xl w-fit">${vlaueTextareaQuestion}</p></div>` 
     let response
     if(listHref.length == 4){
@@ -56,10 +55,8 @@ btnSendQuestion.addEventListener("click", async () => {
             })
         })
         response = await response.json()
-        console.log(response)
         const titleChat = document.getElementById(`titleChat${listHref[listHref.length - 1]}`)
         const copyTitleChat = titleChat
-        console.log(copyTitleChat)
         titleChat.remove()
         srcChats.append(copyTitleChat)
     }
@@ -105,7 +102,6 @@ function changeChat(idChat){
 
 function changeTitle(idChat){
     const input = document.querySelector(`#titleChat${idChat} input`)
-    console.log(blur)
     input.readOnly = false
     input.classList.add("border-green-500",  "border-4", "rounded-lg", "p-1")
     input.focus();
@@ -119,7 +115,6 @@ async function blurTitle(idChat){
     if (input){
         input.readOnly = true
         input.classList.remove("border-green-500",  "border-4", "rounded-lg", "p-1")
-        console.log(input.classList)
     }
     const change = document.querySelector(`#titleChat${idChat} svg`)
     change.classList.remove("hidden")
@@ -128,7 +123,6 @@ async function blurTitle(idChat){
 }
 
 function clickSettings(){
-    console.log("click set")
     profile.classList.remove("-left-100")
     bgNoColor.classList.remove("-left-full")
 }

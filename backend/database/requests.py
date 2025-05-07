@@ -58,11 +58,9 @@ def select_all_messages(chat_id):
         return json.loads(messages)
     
 def select_all_chats(user_id):
-    print(user_id)
     with Session() as session:
         list_chats = session.query(TableChats.id, TableChats.title).filter(TableChats.user_id == user_id).order_by(TableChats.last_change_datetime).all()
         list_chats = [{"id": chat.id, "title": chat.title} for chat in list_chats]
-        print(list_chats)
         return list_chats
     
 def delete_chat_db(user_id, chat_id):

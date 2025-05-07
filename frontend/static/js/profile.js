@@ -60,7 +60,6 @@ btnSave.addEventListener("click", async () => {
                 }
                 else{
                     response = await response.json()
-                    console.log(response)
                     alert(response.detail)
                 }
             }
