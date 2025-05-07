@@ -8,7 +8,7 @@ from backend.jwt import security, config
 ai_router = APIRouter(prefix="/ai")
 
 giga = GigaChat(
-    credentials="OGY1NTNkM2ItNDY3Yy00MTYwLTkxZDEtNjA0YjcwMzM0YzYwOmFhNDZhYjg4LTk1ZWYtNGUwYS05YmFhLTM4NzkzZjZhYmQ5ZQ==",
+    credentials="<YOUR_API_KEY>",
     verify_ssl_certs=False
 )
 

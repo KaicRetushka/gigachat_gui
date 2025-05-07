@@ -42,4 +42,4 @@ async def give_unknown_path(unknown_path: str):
 
 if __name__ == "__main__":
     create_db()
-    uvicorn.run("main:app", host="0.0.0.0", reload=True)
+    uvicorn.run("main:app", host="localhost", reload=True)
