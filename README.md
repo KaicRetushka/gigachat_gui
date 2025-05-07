@@ -3,7 +3,6 @@
 <div align="center">
   <img src="https://img.shields.io/badge/Python-3.10+-blue?logo=python" alt="Python Version">
   <img src="https://img.shields.io/badge/FastAPI-0.95+-green?logo=fastapi" alt="FastAPI Version">
-  <img src="https://img.shields.io/badge/License-MIT-yellow" alt="License">
 </div>
 
 **GigaChat GUI** - это современный и удобный графический интерфейс для взаимодействия с нейросетью GigaChat от SberAI. Проект предоставляет простой способ интеграции с API GigaChat через интуитивно понятный веб-интерфейс.
